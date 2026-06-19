@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#6EC6F0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="AIM">
+<link rel="manifest" href="./manifest.json">
+<title>AIM – Aide Interactive Maïssa</title>
+<link rel="stylesheet" href="./main.css">
+</head>
+<body>
+
+<div class="offline-banner" id="offlineBanner">📵 Pas de connexion — AIM fonctionne quand même !</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <div class="logo-wrap">
+      <svg class="logo-svg" viewBox="0 0 110 36" xmlns="http://www.w3.org/2000/svg" aria-label="AIM">
+        <defs>
+          <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#6EC6F0">
+              <animate attributeName="stop-color" values="#6EC6F0;#A07BE5;#FF9FC8;#6EC6F0" dur="4s" repeatCount="indefinite"/>
+            </stop>
+            <stop offset="100%" style="stop-color:#A07BE5">
+              <animate attributeName="stop-color" values="#A07BE5;#FF9FC8;#6EC6F0;#A07BE5" dur="4s" repeatCount="indefinite"/>
+            </stop>
+          </linearGradient>
+          <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#FFD94A"/>
+            <stop offset="100%" style="stop-color:#FFB347"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Lettres AIM -->
+        <text x="0" y="28" font-family="Baloo 2, Arial" font-size="32" font-weight="800"
+              fill="url(#logoGrad)" letter-spacing="-1">AIM</text>
+
+        <!-- Étoile animée -->
+        <g class="logo-star" transform="translate(88, 6)">
+          <!-- Rayons de l'étoile -->
+          <line x1="8" y1="0" x2="8" y2="4"  stroke="url(#starGrad)" stroke-width="2" stroke-linecap="round">
+            <animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite" begin="0s"/>
+          </line>
+          <line x1="8" y1="12" x2="8" y2="16" stroke="url(#starGrad)" stroke-width="2" stroke-linecap="round">
+            <animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite" begin="0.2s"/>
+          </line>
+          <line x1="0" y1="8" x2="4" y2="8"  stroke="url(#starGrad)" stroke-width="2" stroke-linecap="round">
+            <animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite" begin="0.4s"/>
+          </line>
+          <line x1="12" y1="8" x2="16" y2="8" stroke="url(#starGrad)" stroke-width="2" stroke-linecap="round">
+            <animate attributeName="opacity" values="1;0.3;1" dur="1.6s" repeatCount="indefinite" begin="0.6s"/>
+          </line>
+          <!-- Diagonales -->
+          <line x1="2" y1="2"  x2="4.5" y2="4.5"  stroke="url(#starGrad)" stroke-width="1.5" stroke-linecap="round">
+            <animate attributeName="opacity" values="0.5;1;0.5" dur="1.6s" repeatCount="indefinite" begin="0.1s"/>
+          </line>
+          <line x1="11.5" y1="11.5" x2="14" y2="14" stroke="url(#starGrad)" stroke-width="1.5" stroke-linecap="round">
+            <animate attributeName="opacity" values="0.5;1;0.5" dur="1.6s" repeatCount="indefinite" begin="0.3s"/>
+          </line>
+          <line x1="14" y1="2"  x2="11.5" y2="4.5" stroke="url(#starGrad)" stroke-width="1.5" stroke-linecap="round">
+            <animate attributeName="opacity" values="0.5;1;0.5" dur="1.6s" repeatCount="indefinite" begin="0.5s"/>
+          </line>
+          <line x1="4.5" y1="11.5" x2="2" y2="14" stroke="url(#starGrad)" stroke-width="1.5" stroke-linecap="round">
+            <animate attributeName="opacity" values="0.5;1;0.5" dur="1.6s" repeatCount="indefinite" begin="0.7s"/>
+          </line>
+          <!-- Centre de l'étoile -->
+          <circle cx="8" cy="8" r="3.5" fill="url(#starGrad)">
+            <animate attributeName="r" values="3.5;4.5;3.5" dur="1.6s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="1;0.8;1" dur="1.6s" repeatCount="indefinite"/>
+          </circle>
+          <!-- Halo -->
+          <circle cx="8" cy="8" r="6" fill="none" stroke="#FFD94A" stroke-width="1" opacity="0.4">
+            <animate attributeName="r" values="4;8;4" dur="1.6s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.5;0;0.5" dur="1.6s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+
+        <!-- Underscore animé sous AIM -->
+        <rect x="0" y="31" width="80" height="2.5" rx="1.5" fill="url(#logoGrad)" opacity="0.35">
+          <animate attributeName="width" values="0;80;0" dur="3s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+        </rect>
+      </svg>
+      <div class="subtitle">Aide Interactive Maïssa</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span>⭐</span>
+    <div class="star-count" id="starCount">0</div>
+    <button class="parent-btn" onclick="showParentLock()">👨‍👩‍👧 Parents</button>
+  </div>
+</div>
+
+<!-- HOME SCREEN -->
+<div class="screen active" id="homeScreen">
+  <div class="welcome-card">
+    <div class="welcome-name">Bonjour Maïssa ! 🌈</div>
+    <div class="welcome-sub">Tu es courageuse et tu travailles super bien.<br>Aujourd'hui on va apprendre en s'amusant !</div>
+    <div class="xp-bar-wrap">
+      <div class="xp-label">Ta progression du jour ✨</div>
+      <div class="xp-bar"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+    </div>
+    <div class="streak-pill" id="streakPill">🔥 0 jour de suite</div>
+  </div>
+
+  <!-- BOUTON RÉVISION -->
+  <div class="revision-banner" id="revisionBtn" style="display:none" onclick="startModule('revision')">
+    <div class="rev-icon">🔁</div>
+    <div class="rev-text">
+      <div class="rev-title">Mode Révision</div>
+      <div class="rev-sub">Tu as des questions à retravailler !</div>
+    </div>
+    <div class="rev-arrow">→</div>
+  </div>
+
+  <div class="section-title"><span>📚</span>Choisir une activité</div>
+
+  <!-- SECTION SPÉCIALE REPÈRES -->
+  <div class="reperes-section">
+    <div class="reperes-title">🎯 Mes exercices personnalisés</div>
+    <div class="reperes-sub">D'après ton évaluation repères — tes points à améliorer !</div>
+  </div>
+  <div class="modules-grid reperes-grid">
+    <div class="module-card reperes" data-key="comp_texte" onclick="startModule('comp_texte')">
+      <div class="module-icon">📝</div>
+      <div class="module-name">Je comprends ce que je lis</div>
+      <div class="module-sub">Textes seuls</div>
+      <div class="lvl-badge" id="badge-comp_texte">Niv. 1</div>
+    </div>
+    <div class="module-card reperes" data-key="comp_phrases" onclick="startModule('comp_phrases')">
+      <div class="module-icon">🔍</div>
+      <div class="module-name">Je comprends les phrases</div>
+      <div class="module-sub">Sens & structure</div>
+      <div class="lvl-badge" id="badge-comp_phrases">Niv. 1</div>
+    </div>
+    <div class="module-card reperes" data-key="ecriture_mots" onclick="startModule('ecriture_mots')">
+      <div class="module-icon">✏️</div>
+      <div class="module-name">J'écris les mots</div>
+      <div class="module-sub">Sons & syllabes</div>
+      <div class="lvl-badge" id="badge-ecriture_mots">Niv. 1</div>
+    </div>
+    <div class="module-card reperes" data-key="ligne_graduee" onclick="startModule('ligne_graduee')">
+      <div class="module-icon">📏</div>
+      <div class="module-name">La ligne graduée</div>
+      <div class="module-sub">Placer les nombres</div>
+      <div class="lvl-badge" id="badge-ligne_graduee">Niv. 1</div>
+    </div>
+    <div class="module-card reperes" data-key="geo_problemes" onclick="startModule('geo_problemes')">
+      <div class="module-icon">📐</div>
+      <div class="module-name">Géométrie</div>
+      <div class="module-sub">Formes & périmètres</div>
+      <div class="lvl-badge" id="badge-geo_problemes">Niv. 1</div>
+    </div>
+    <div class="module-card reperes" data-key="ecrire_nombres" onclick="startModule('ecrire_nombres')">
+      <div class="module-icon">🔢</div>
+      <div class="module-name">J'écris les nombres</div>
+      <div class="module-sub">Chiffres & lettres</div>
+      <div class="lvl-badge" id="badge-ecrire_nombres">Niv. 1</div>
+    </div>
+    <div class="module-card reperes" data-key="soustraction" onclick="startModule('soustraction')">
+      <div class="module-icon">➖</div>
+      <div class="module-name">Je soustrais</div>
+      <div class="module-sub">Soustractions</div>
+      <div class="lvl-badge" id="badge-soustraction">Niv. 1</div>
+    </div>
+  </div>
+  <div class="section-title" style="margin-top:10px"><span>📚</span>Toutes les activités</div>
+  <div class="modules-grid">
+    <div class="module-card fr" data-key="fr_vocab" onclick="startModule('fr_vocab')">
+      <div class="module-icon">🔤</div>
+      <div class="module-name">Les mots</div>
+      <div class="module-sub">Vocabulaire</div>
+      <div class="lvl-badge" id="badge-fr_vocab">Niv. 1</div>
+    </div>
+    <div class="module-card fr" data-key="fr_phrases" onclick="startModule('fr_phrases')">
+      <div class="module-icon">✍️</div>
+      <div class="module-name">Les phrases</div>
+      <div class="module-sub">Grammaire</div>
+      <div class="lvl-badge" id="badge-fr_phrases">Niv. 1</div>
+    </div>
+    <div class="module-card lecture" data-key="lecture" onclick="startModule('lecture')">
+      <div class="module-icon">📖</div>
+      <div class="module-name">Je lis</div>
+      <div class="module-sub">Compréhension</div>
+      <div class="lvl-badge" id="badge-lecture">Niv. 1</div>
+    </div>
+    <div class="module-card oral" data-key="dictee" onclick="startModule('dictee')">
+      <div class="module-icon">🎤</div>
+      <div class="module-name">Dictée</div>
+      <div class="module-sub">Écoute & écris</div>
+      <div class="lvl-badge" id="badge-dictee">Niv. 1</div>
+    </div>
+    <div class="module-card oral" data-key="oral" onclick="startModule('oral')">
+      <div class="module-icon">🗣️</div>
+      <div class="module-name">Je parle</div>
+      <div class="module-sub">Exercice oral</div>
+      <div class="lvl-badge" id="badge-oral">Niv. 1</div>
+    </div>
+    <div class="module-card math" data-key="math_calc" onclick="startModule('math_calc')">
+      <div class="module-icon">🔢</div>
+      <div class="module-name">Calcul</div>
+      <div class="module-sub">Additions</div>
+      <div class="lvl-badge" id="badge-math_calc">Niv. 1</div>
+    </div>
+    <div class="module-card math" data-key="math_prob" onclick="startModule('math_prob')">
+      <div class="module-icon">🧩</div>
+      <div class="module-name">Problèmes</div>
+      <div class="module-sub">En images</div>
+      <div class="lvl-badge" id="badge-math_prob">Niv. 1</div>
+    </div>
+    <div class="module-card math" data-key="math_num" onclick="startModule('math_num')">
+      <div class="module-icon">💯</div>
+      <div class="module-name">Nombres</div>
+      <div class="module-sub">Jusqu'à 1000</div>
+      <div class="lvl-badge" id="badge-math_num">Niv. 1</div>
+    </div>
+    <div class="module-card fr" data-key="fr_conj" onclick="startModule('fr_conj')">
+      <div class="module-icon">🔀</div>
+      <div class="module-name">Conjugaison</div>
+      <div class="module-sub">Présent, passé, futur</div>
+      <div class="lvl-badge" id="badge-fr_conj">Niv. 1</div>
+    </div>
+    <div class="module-card fr" data-key="fr_ortho" onclick="startModule('fr_ortho')">
+      <div class="module-icon">🔡</div>
+      <div class="module-name">Orthographe</div>
+      <div class="module-sub">Les bons mots</div>
+      <div class="lvl-badge" id="badge-fr_ortho">Niv. 1</div>
+    </div>
+    <div class="module-card math" data-key="math_frac" onclick="startModule('math_frac')">
+      <div class="module-icon">🍕</div>
+      <div class="module-name">Fractions</div>
+      <div class="module-sub">Moitié, tiers, quart</div>
+      <div class="lvl-badge" id="badge-math_frac">Niv. 1</div>
+    </div>
+    <div class="module-card geo" data-key="math_geo" onclick="startModule('math_geo')">
+      <div class="module-icon">📐</div>
+      <div class="module-name">Géométrie</div>
+      <div class="module-sub">Formes & périmètres</div>
+      <div class="lvl-badge" id="badge-math_geo">Niv. 1</div>
+    </div>
+    <div class="module-card conj" onclick="startModule('conj_oral')">
+      <div class="module-icon">🗣️🔀</div>
+      <div class="module-name">Conjugaison orale</div>
+      <div class="module-sub">Parle & conjugue</div>
+    </div>
+    <div class="module-card table" onclick="startModule('multitable')">
+      <div class="module-icon">✖️</div>
+      <div class="module-name">Tables de ×</div>
+      <div class="module-sub">Aide-mémoire</div>
+    </div>
+    <div class="module-card flash" data-key="flashcards" onclick="startModule('flashcards')">
+      <div class="module-icon">⚡</div>
+      <div class="module-name">Flashcards</div>
+      <div class="module-sub">Apprends les mots</div>
+      <div class="lvl-badge" id="badge-flashcards">Niv. 1</div>
+    </div>
+    <div class="module-card karaoke" data-key="karaoke" onclick="startModule('karaoke')">
+      <div class="module-icon">🎙️</div>
+      <div class="module-name">Karaoké</div>
+      <div class="module-sub">Répète les phrases</div>
+      <div class="lvl-badge" id="badge-karaoke">Niv. 1</div>
+    </div>
+    <div class="module-card puzzle-card" data-key="puzzle" onclick="startModule('puzzle')">
+      <div class="module-icon">🔤</div>
+      <div class="module-name">Puzzle de phrases</div>
+      <div class="module-sub">Remets les mots</div>
+      <div class="lvl-badge" id="badge-puzzle">Niv. 1</div>
+    </div>
+    <div class="module-card defi" onclick="startModule('defi')">
+      <div class="module-icon">🎯</div>
+      <div class="module-name">Défi du jour</div>
+      <div class="module-sub">5 questions · 5 min</div>
+      <div class="defi-badge-dot" id="defiBadgeDot" style="display:none">NOUVEAU</div>
+    </div>
+    <div class="module-card badges-card" onclick="startModule('badges')">
+      <div class="module-icon">🏅</div>
+      <div class="module-name">Mes badges</div>
+      <div class="module-sub">Collection Mario</div>
+      <div class="lvl-badge" id="badge-count-display">0</div>
+    </div>
+    <div class="module-card memory" data-key="memory" onclick="startModule('memory')">
+      <div class="module-icon">🧠</div>
+      <div class="module-name">Mémoire</div>
+      <div class="module-sub">Jeu de paires</div>
+      <div class="lvl-badge" id="badge-memory">Niv. 1</div>
+    </div>
+    <div class="module-card reward" onclick="showRewards()">
+      <div class="module-icon">🏆</div>
+      <div class="module-name">Trophées</div>
+      <div class="module-sub">Mes récompenses</div>
+    </div>
+  </div>
+</div>
+
+<!-- ACTIVITY SCREEN (QCM + Révision) -->
+<div class="screen" id="activityScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="activity-header">
+    <div class="activity-title" id="activityTitle"></div>
+    <div class="level-badge" id="qModuleLevelBadge" style="display:none;margin-bottom:4px"></div>
+    <div class="level-badge" id="qLevelBadge"></div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="progressLabel">Question 1 / 5</div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:20%"></div></div>
+    </div>
+  </div>
+  <div class="question-card">
+    <button class="question-audio-btn" onclick="speakQuestion()">🔊 Écouter la question</button>
+    <div class="image-hint" id="imageHint"></div>
+    <div class="question-text" id="questionText"></div>
+    <div class="question-hint" id="questionHint" style="display:none">
+      💡 <span id="hintText"></span>
+    </div>
+    <div class="answers-grid" id="answersGrid"></div>
+    <div class="feedback-card" id="feedbackCard">
+      <div class="feedback-emoji" id="feedbackEmoji"></div>
+      <div class="feedback-text" id="feedbackText"></div>
+      <div class="feedback-explain" id="feedbackExplain"></div>
+    </div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Continuer ➡️</button>
+  </div>
+</div>
+
+<!-- LECTURE SCREEN -->
+<div class="screen" id="lectureScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="activity-header">
+    <div class="activity-title">📖 Je lis &amp; comprends</div>
+    <div class="level-badge lvl-1" id="lectureLevelBadge" style="display:none;margin-top:6px"></div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="lectureProgressLabel">Histoire 1 / 3</div>
+      <div class="progress-bar"><div class="progress-fill" id="lectureProgress" style="width:33%"></div></div>
+    </div>
+  </div>
+  <div id="storyZone">
+    <div class="question-card">
+      <div class="story-meta-row">
+        <button class="story-listen-btn" onclick="speakStory()">🔊 Écouter l'histoire</button>
+        <span class="story-lvl-badge" id="storyLevelBadge" style="display:none"></span>
+      </div>
+      <div class="inference-banner" id="storyInferenceBadge" style="display:none"></div>
+      <div class="story-image" id="storyImage"></div>
+      <div class="story-title" id="storyTitle"></div>
+      <div class="story-card" id="storyText"></div>
+      <button class="next-btn show" onclick="showStoryQuestions()">J'ai compris ! Les questions ➡️</button>
+    </div>
+  </div>
+  <div id="storyQZone" style="display:none">
+    <div class="question-card">
+      <div class="question-hint" style="display:flex">💡 <span id="storyQLabel">Question 1 / 3</span></div>
+      <div class="question-text" id="storyQText"></div>
+      <div class="answers-grid" id="storyAnswers"></div>
+      <div class="feedback-card" id="storyFeedback">
+        <div class="feedback-emoji" id="storyFeedbackEmoji"></div>
+        <div class="feedback-text" id="storyFeedbackText"></div>
+        <div class="feedback-explain" id="storyFeedbackExplain"></div>
+      </div>
+      <button class="next-btn" id="storyNextBtn" onclick="nextStoryQ()">Continuer ➡️</button>
+    </div>
+  </div>
+</div>
+
+<!-- DICTÉE SCREEN -->
+<div class="screen" id="dicteeScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="activity-header">
+    <div class="activity-title">🎤 Dictée des mots</div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="dicteeLabel">Mot 1 / 6</div>
+      <div class="progress-bar"><div class="progress-fill" id="dicteeFill" style="width:16%"></div></div>
+    </div>
+  </div>
+  <div class="question-card">
+    <div class="question-hint" style="display:flex">💡 <span>Écoute bien le mot, puis reconstitue-le avec les lettres !</span></div>
+    <button class="dictee-listen-btn" onclick="speakDicteeWord()">🔊 Écoute le mot</button>
+    <div class="dictee-answer-row" id="dicteeAnswerRow"></div>
+    <div class="dictee-letters" id="dicteeLetters"></div>
+    <div class="dictee-controls">
+      <button class="dictee-ctrl-btn" onclick="dicteeErase()">⌫ Effacer</button>
+      <button class="dictee-ctrl-btn validate" onclick="dicteeValidate()">✅ Valider</button>
+    </div>
+    <div class="feedback-card" id="dicteeFeedback">
+      <div class="feedback-emoji" id="dicteeFeedbackEmoji"></div>
+      <div class="feedback-text" id="dicteeFeedbackText"></div>
+      <div class="feedback-explain" id="dicteeFeedbackExplain"></div>
+    </div>
+    <button class="next-btn" id="dicteeNextBtn" onclick="nextDicteeWord()">Continuer ➡️</button>
+  </div>
+</div>
+
+<!-- ORAL SCREEN -->
+<div class="screen" id="oralScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="activity-header">
+    <div class="activity-title">🗣️ Je m'entraîne à l'oral</div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="oralLabel">Question 1 / 5</div>
+      <div class="progress-bar"><div class="progress-fill" id="oralFill" style="width:20%"></div></div>
+    </div>
+  </div>
+  <div class="question-card">
+    <div class="question-hint" style="display:flex">🎙️ <span>Écoute la question et réponds à voix haute !</span></div>
+    <div class="image-hint" id="oralImage"></div>
+    <div class="question-text" id="oralQuestion"></div>
+    <button class="dictee-listen-btn" onclick="speakOralQuestion()">🔊 Réécouter</button>
+    <div class="oral-record-zone">
+      <button class="oral-record-btn" id="oralRecordBtn" onclick="toggleRecording()">
+        <span id="oralRecordIcon">🎙️</span>
+        <span id="oralRecordLabel" class="oral-record-label">Appuie pour parler</span>
+      </button>
+      <div class="oral-transcript-box" id="oralTranscript">Ta réponse apparaîtra ici...</div>
+    </div>
+    <div class="oral-model-answer" id="oralModelZone" style="display:none">
+      <div class="oral-model-label">💡 Exemple de bonne réponse :</div>
+      <div class="oral-model-text" id="oralModelText"></div>
+    </div>
+    <div class="dictee-controls" style="margin-top:14px">
+      <button class="dictee-ctrl-btn" onclick="showOralModel()">👀 Voir la réponse</button>
+      <button class="dictee-ctrl-btn validate" onclick="nextOralQ()">Continuer ➡️</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONJUGAISON ORALE SCREEN -->
+<div class="screen" id="conjOralScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="activity-header">
+    <div class="activity-title">🔀 Conjugaison à l'oral</div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="conjLabel">Verbe 1 / 9</div>
+      <div class="progress-bar"><div class="progress-fill" id="conjFill" style="width:11%"></div></div>
+    </div>
+  </div>
+  <div class="question-card">
+    <!-- Verbe + temps en grand -->
+    <div class="conj-verb-display">
+      <div class="conj-verb-name" id="conjVerb">CHANTER</div>
+      <div class="conj-tense-badge" id="conjTense">PRÉSENT</div>
+    </div>
+    <div class="image-hint" id="conjImage">🎵</div>
+    <div class="conj-prompt" id="conjPrompt">Conjugue le verbe CHANTER au présent.</div>
+    <div class="question-hint" style="display:flex;margin-bottom:14px">
+      💡 <span id="conjHint"></span>
+    </div>
+    <!-- Bouton réécouter -->
+    <button class="dictee-listen-btn" onclick="speak(document.getElementById('conjPrompt').textContent, 0.85)">🔊 Réécouter</button>
+    <!-- Zone enregistrement -->
+    <div class="oral-record-zone">
+      <button class="oral-record-btn" id="conjRecordBtn" onclick="toggleConjRecording()">
+        <span id="conjRecordIcon">🎙️</span>
+        <span id="conjRecordLabel" class="oral-record-label">Appuie pour conjuguer</span>
+      </button>
+      <div class="oral-transcript-box conj-transcript" id="conjTranscript">Ta conjugaison apparaîtra ici...</div>
+    </div>
+    <!-- Réponse modèle -->
+    <div class="oral-model-answer" id="conjModelZone" style="display:none">
+      <div class="oral-model-label">✅ Conjugaison correcte :</div>
+      <div class="oral-model-text" id="conjModelText"></div>
+    </div>
+    <div class="dictee-controls" style="margin-top:14px">
+      <button class="dictee-ctrl-btn" onclick="showConjModel()">👀 Voir la conjugaison</button>
+      <button class="dictee-ctrl-btn validate" onclick="nextConjQ()">Continuer ➡️</button>
+    </div>
+  </div>
+</div>
+
+<!-- TABLE DE MULTIPLICATION SCREEN -->
+<div class="screen" id="multiTableScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="activity-header">
+    <div class="activity-title" id="tableTitle">Table de 2</div>
+    <div class="progress-wrap" style="margin-top:6px">
+      <div class="progress-label">Clique sur une ligne pour l'écouter 🔊</div>
+    </div>
+  </div>
+  <!-- Sélecteur de table -->
+  <div class="table-selector">
+    <div class="table-selector-label">Choisis ta table :</div>
+    <div class="table-btns">
+      <button class="table-btn active" data-n="2" onclick="renderMultiTable(2)">×2</button>
+      <button class="table-btn" data-n="3"  onclick="renderMultiTable(3)">×3</button>
+      <button class="table-btn" data-n="4"  onclick="renderMultiTable(4)">×4</button>
+      <button class="table-btn" data-n="5"  onclick="renderMultiTable(5)">×5</button>
+      <button class="table-btn" data-n="6"  onclick="renderMultiTable(6)">×6</button>
+      <button class="table-btn" data-n="7"  onclick="renderMultiTable(7)">×7</button>
+      <button class="table-btn" data-n="8"  onclick="renderMultiTable(8)">×8</button>
+      <button class="table-btn" data-n="9"  onclick="renderMultiTable(9)">×9</button>
+      <button class="table-btn" data-n="10" onclick="renderMultiTable(10)">×10</button>
+    </div>
+  </div>
+  <!-- Grille de la table -->
+  <div class="table-card">
+    <div class="table-grid" id="tableGrid"></div>
+  </div>
+  <!-- Bouton quiz -->
+  <button class="table-quiz-btn" id="tableQuizBtn">
+    🎯 M'entraîner sur cette table !
+  </button>
+</div>
+
+<!-- MEMORY SCREEN -->
+<div class="screen" id="memoryScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="activity-header">
+    <div class="activity-title">🧠 Jeu de mémoire</div>
+    <div class="level-badge" id="memLevelBadge" style="display:none;margin-top:4px"></div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="memScore">Paires trouvées : 0 / 6</div>
+      <div class="progress-bar"><div class="progress-fill" id="memFill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div class="question-card">
+    <div class="difficulty-selector">
+      <div class="diff-label">Niveau :</div>
+      <button class="diff-btn active" onclick="setDifficulty('easy',this)">😊 Facile<br><small>4 paires</small></button>
+      <button class="diff-btn" onclick="setDifficulty('medium',this)">🤔 Moyen<br><small>6 paires</small></button>
+      <button class="diff-btn" onclick="setDifficulty('hard',this)">🔥 Difficile<br><small>8 paires</small></button>
+    </div>
+    <div class="question-hint" style="display:flex;margin-top:10px">💡 <span>Retourne les cartes et trouve les paires !</span></div>
+    <div class="memory-grid" id="memoryGrid"></div>
+  </div>
+</div>
+
+<!-- REWARD SCREEN -->
+<div class="screen" id="rewardScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="reward-screen-inner">
+    <div class="reward-trophy" id="rewardTrophy"></div>
+    <div class="reward-title" id="rewardTitle">Bravo !</div>
+    <div class="reward-stars" id="rewardStars">⭐⭐⭐</div>
+    <div class="reward-msg" id="rewardMsg">Tu travailles super bien !</div>
+    <button class="reward-btn" onclick="goHome()">🏠 Retour à l'accueil</button>
+    <button class="reward-btn-rev" id="rewardRevBtn" style="display:none" onclick="startModule('revision')">🔁 Réviser mes erreurs</button>
+  </div>
+</div>
+
+<!-- PARENT SCREEN -->
+<div class="parent-screen" id="parentScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="parent-lock" id="parentLock">
+    <div class="parent-lock-icon">🔐</div>
+    <div class="parent-lock-title">Espace Parents</div>
+    <div class="parent-lock-sub">Entrez le code : <strong>1234</strong></div>
+    <div class="pin-row">
+      <div class="pin-dot" id="dot0"></div><div class="pin-dot" id="dot1"></div>
+      <div class="pin-dot" id="dot2"></div><div class="pin-dot" id="dot3"></div>
+    </div>
+    <div class="pin-grid">
+      <button class="pin-btn" onclick="pinPress('1')">1</button>
+      <button class="pin-btn" onclick="pinPress('2')">2</button>
+      <button class="pin-btn" onclick="pinPress('3')">3</button>
+      <button class="pin-btn" onclick="pinPress('4')">4</button>
+      <button class="pin-btn" onclick="pinPress('5')">5</button>
+      <button class="pin-btn" onclick="pinPress('6')">6</button>
+      <button class="pin-btn" onclick="pinPress('7')">7</button>
+      <button class="pin-btn" onclick="pinPress('8')">8</button>
+      <button class="pin-btn" onclick="pinPress('9')">9</button>
+      <button class="pin-btn" style="opacity:0" disabled></button>
+      <button class="pin-btn" onclick="pinPress('0')">0</button>
+      <button class="pin-btn" onclick="pinErase()">⌫</button>
+    </div>
+  </div>
+  <div id="parentDashboard" style="display:none">
+    <div class="section-title"><span>📊</span>Tableau de bord de Maïssa</div>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-value" id="dashStars">0</div><div class="stat-label">Étoiles</div></div>
+      <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-value" id="dashSessions">0</div><div class="stat-label">Activités</div></div>
+      <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-value" id="dashCorrect">0%</div><div class="stat-label">Réussite</div></div>
+      <div class="stat-card"><div class="stat-icon">🔥</div><div class="stat-value" id="dashStreak">0</div><div class="stat-label">Jours consécutifs</div></div>
+    </div>
+    <div class="section-title" style="margin-top:24px"><span>📅</span>Calendrier d'activité</div>
+    <div class="calendar-card">
+      <div class="calendar-legend"><span class="cal-dot active"></span>Jour actif &nbsp;<span class="cal-dot"></span>Pas d'activité</div>
+      <div class="calendar-grid" id="calendarGrid"></div>
+    </div>
+    <div class="section-title" style="margin-top:20px"><span>🎚️</span>Niveaux débloqués</div>
+    <div class="levels-grid" id="levelsGrid"></div>
+    <div class="section-title" style="margin-top:20px"><span>⚠️</span>Questions à retravailler</div>
+    <div class="errors-list" id="errorsList"></div>
+    <div class="section-title" style="margin-top:20px"><span>📈</span>Par module</div>
+    <div class="module-stats" id="moduleStats"></div>
+    <div class="encouragement-card">
+      <div class="enc-title">💡 Conseils pour aider Maïssa</div>
+      <div class="enc-item">✔ Lire les consignes à voix haute avec elle avant chaque activité</div>
+      <div class="enc-item">✔ Sessions courtes : 15 minutes maximum par jour</div>
+      <div class="enc-item">✔ Célébrer chaque niveau débloqué — c'est une vraie réussite !</div>
+      <div class="enc-item">✔ Utiliser le Mode Révision pour les questions souvent ratées</div>
+      <div class="enc-item">✔ Faire la dictée après les séances d'orthophonie</div>
+    </div>
+    <button class="back-btn" style="margin-top:20px;display:flex" onclick="resetParent()">🔒 Verrouiller</button>
+    <button class="back-btn" style="margin-top:10px;display:flex;background:#ffe0da;color:#c0392b" onclick="confirmReset()">🗑️ Remettre à zéro</button>
+  </div>
+</div>
+
+
+<!-- FLASHCARD SCREEN -->
+<div class="screen" id="flashcardScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="activity-header">
+    <div class="activity-title">⚡ Flashcards</div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="flashProgressLabel">Carte 1 / 8</div>
+      <div class="progress-bar"><div class="progress-fill" id="flashProgress" style="width:12%"></div></div>
+    </div>
+    <div class="level-badge" id="flashLevelBadge" style="display:none;margin-top:4px"></div>
+    <span class="flash-box-badge box-0" id="flashBoxBadge">Nouveau</span>
+  </div>
+
+  <!-- PHASE ÉTUDE -->
+  <div id="flashStudyZone" class="question-card flash-study-card">
+    <div class="flash-emoji" id="flashEmoji">🌸</div>
+    <div class="flash-word" id="flashWord">un mot</div>
+    <div class="flash-def" id="flashDef">Définition ici.</div>
+    <div class="flash-exemple" id="flashExemple">💬 Exemple ici.</div>
+    <button class="question-audio-btn" onclick="speak(document.getElementById('flashWord').textContent + '. ' + document.getElementById('flashDef').textContent, 0.82)">🔊 Réécouter</button>
+    <button class="next-btn show flash-next-btn" onclick="flashNext()">Je m'en souviens → Quiz !</button>
+  </div>
+
+  <!-- PHASE QUIZ -->
+  <div id="flashQuizZone" style="display:none">
+    <div class="question-card">
+      <div class="flash-emoji" id="flashQuizEmoji">🌸</div>
+      <div class="flash-quiz-word" id="flashQuizWord">un mot</div>
+      <div class="flash-quiz-prompt" id="flashQuizPrompt">Tu t'en souviens ?</div>
+      <div class="flash-answer-reveal" id="flashAnswerReveal" style="display:none"></div>
+      <button class="question-audio-btn" style="margin-top:14px" onclick="revealFlashAnswer()">👀 Voir la définition</button>
+      <div class="flash-rate-zone" id="flashRateZone" style="display:none">
+        <div class="flash-rate-label">Tu t'en souvenais ?</div>
+        <div class="flash-rate-btns">
+          <button class="flash-rate-btn bad"  onclick="rateFlash(false)">😞 Non</button>
+          <button class="flash-rate-btn good" onclick="rateFlash(true)">😊 Oui !</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KARAOKÉ SCREEN -->
+<div class="screen" id="karaokeScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="activity-header">
+    <div class="activity-title">🎙️ Karaoké de phrases</div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="karaokeProgressLabel">Phrase 1 / 5</div>
+      <div class="progress-bar"><div class="progress-fill" id="karaokeProgress" style="width:20%"></div></div>
+    </div>
+  </div>
+  <div class="question-card">
+    <div class="karaoke-theme-badge" id="karaokeTheme">Nature</div>
+    <div class="karaoke-emoji" id="karaokeEmoji">☀️</div>
+    <div class="karaoke-hint">📺 Écoute d'abord, puis répète à voix haute !</div>
+    <div class="karaoke-word-display" id="karaokeWordDisplay"></div>
+    <div class="karaoke-controls">
+      <button class="karaoke-listen-btn" id="karaokeListenBtn" onclick="listenAndAnimate()">
+        ▶️ Écouter la phrase
+      </button>
+      <button class="oral-record-btn karaoke-record-btn" id="karaokeRecordBtn" style="display:none" onclick="startKaraokeRecord()">
+        <span id="karaokeRecordIcon">🎙️</span>
+        <span class="oral-record-label">À ton tour !</span>
+      </button>
+    </div>
+    <div class="oral-transcript-box karaoke-transcript" id="karaokeTranscript"></div>
+    <button class="next-btn" id="karaokeNextBtn" onclick="nextKaraokePhrase()">Continuer ➡️</button>
+  </div>
+</div>
+
+<!-- PUZZLE SCREEN -->
+<div class="screen" id="puzzleScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="activity-header">
+    <div class="activity-title">🔤 Puzzle de phrases</div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="puzzleProgressLabel">Puzzle 1 / 5</div>
+      <div class="progress-bar"><div class="progress-fill" id="puzzleProgress" style="width:20%"></div></div>
+    </div>
+  </div>
+  <div class="question-card">
+    <div class="question-hint" style="display:flex" id="puzzleHint">💡 Hint</div>
+    <div class="puzzle-label">📥 Ta phrase :</div>
+    <div class="puzzle-drop-zone" id="puzzleDropZone"></div>
+    <div class="puzzle-label" style="margin-top:14px">📦 Les mots :</div>
+    <div class="puzzle-word-bank" id="puzzleWordBank"></div>
+    <div class="feedback-card" id="puzzleFeedback">
+      <div class="feedback-emoji"></div>
+      <div class="feedback-text"></div>
+      <div class="feedback-explain"></div>
+    </div>
+    <button class="next-btn show" id="puzzleValidateBtn" onclick="validatePuzzle()" style="background:linear-gradient(135deg,var(--purple),var(--sky))">✅ Valider</button>
+    <button class="next-btn" id="puzzleNextBtn" onclick="nextPuzzle()">Continuer ➡️</button>
+  </div>
+</div>
+
+<!-- BADGES SCREEN -->
+<div class="screen" id="badgesScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="activity-header">
+    <div class="activity-title">🏅 Mes badges Mario</div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="badgesLabel">Tes exploits débloqués !</div>
+    </div>
+  </div>
+  <div class="badges-grid" id="badgesGrid"></div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottom-nav">
+  <button class="nav-btn active" id="navHome" onclick="goHome()">
+    <span class="nav-icon">🏠</span><span class="nav-label">Accueil</span>
+  </button>
+  <button class="nav-btn" onclick="startModule('revision')">
+    <span class="nav-icon">🔁</span><span class="nav-label">Révision</span>
+  </button>
+  <button class="nav-btn" onclick="startModule('defi')">
+    <span class="nav-icon">🎯</span><span class="nav-label">Défi du jour</span>
+  </button>
+  <button class="nav-btn" onclick="startModule('flashcards')">
+    <span class="nav-icon">⚡</span><span class="nav-label">Flashcards</span>
+  </button>
+  <button class="nav-btn" onclick="startModule('badges')">
+    <span class="nav-icon">🏅</span><span class="nav-label">Badges</span>
+  </button>
+  <button class="nav-btn" onclick="showRewards()">
+    <span class="nav-icon">🏆</span><span class="nav-label">Trophées</span>
+  </button>
+</div>
+
+<!-- INSTALL GUIDE -->
+<button id="install-fab" onclick="openInstallGuide()" title="Installer l'application">📲<span class="install-dot"></span></button>
+<div id="install-toast" onclick="openInstallGuide()">
+  <span>📲 Installe l'appli !</span>
+  <button class="toast-close" onclick="event.stopPropagation();dismissInstallToast()">✕</button>
+</div>
+<div id="install-overlay" onclick="if(event.target===this)closeInstallGuide()">
+  <div id="install-card">
+    <button class="close-x" onclick="closeInstallGuide()">✕</button>
+    <div class="install-hero">
+      <div class="install-hero-icon">📲</div>
+      <h3>Installer AIM</h3>
+      <div class="install-hero-sub">Ajoute l'application sur l'écran d'accueil — gratuit, sans App Store, et ça marche même sans connexion !</div>
+    </div>
+    <div class="install-os-tabs">
+      <button class="install-os-tab" data-os="ios" onclick="switchInstallOS('ios')">🍎 iPhone</button>
+      <button class="install-os-tab" data-os="android" onclick="switchInstallOS('android')">🤖 Android</button>
+    </div>
+    <div class="install-steps" id="install-steps-ios">
+      <div class="install-step"><span class="install-step-num">1</span><div><strong>Ouvre le menu Partager</strong><br>Appuie sur l'icône Partager ⎋ en bas de Safari.</div></div>
+      <div class="install-step"><span class="install-step-num">2</span><div><strong>Sur l'écran d'accueil</strong><br>Fais défiler la liste et choisis <strong>« Sur l'écran d'accueil »</strong>.</div></div>
+      <div class="install-step"><span class="install-step-num">3</span><div><strong>Confirme</strong><br>Appuie sur <strong>« Ajouter »</strong> en haut à droite.</div></div>
+    </div>
+    <div class="install-steps" id="install-steps-android">
+      <div class="install-step"><span class="install-step-num">1</span><div><strong>Menu Chrome</strong><br>Appuie sur les <strong>⋮ trois points</strong> en haut à droite.</div></div>
+      <div class="install-step"><span class="install-step-num">2</span><div><strong>Installer l'application</strong><br>Choisis <strong>« Installer l'application »</strong> ou <strong>« Ajouter à l'écran d'accueil »</strong>.</div></div>
+      <div class="install-step"><span class="install-step-num">3</span><div><strong>Confirme</strong><br>Appuie sur <strong>« Installer »</strong>.</div></div>
+      <button class="install-native-btn" id="install-native-btn" style="display:none" onclick="triggerNativeInstall()">⬇️ Installer en un clic</button>
+    </div>
+    <div class="install-tip">🎉 Une fois installée, ouvre l'app directement depuis son icône — elle marche aussi sans internet !</div>
+  </div>
+</div>
+
+<script src="./data.js"></script>
+<script src="./data_flash.js"></script>
+<script src="./audio.js"></script>
+<script src="./state.js"></script>
+<script src="./modules.js"></script>
+<script src="./parent.js"></script>
+<script src="./app.js"></script>
+<script src="./features.js"></script>
+<script src="./install.js"></script>
+</body>
+</html>
