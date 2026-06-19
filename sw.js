@@ -1,20 +1,21 @@
-// AIM — Service Worker (v8)
-// v8 : fix cache CSS/JS bloqué 1 an côté navigateur (voir _headers) qui empêchait
-// les mises à jour de main.css/app.js de s'appliquer malgré les bumps de version précédents
-const CACHE_NAME = 'aim-v8';
+// AIM — Service Worker (v9)
+// v9 : URLs versionnées (?v=9) pour casser le cache navigateur 1 an déjà posé sur les
+// appareils visités avant le fix du _headers (v8 seul ne suffisait pas, l'ancienne
+// URL sans version restait piégée dans le cache HTTP existant)
+const CACHE_NAME = 'aim-v9';
 const ASSETS = [
   './',
   './index.html',
-  './main.css',
-  './data.js',
-  './data_flash.js',
-  './audio.js',
-  './state.js',
-  './modules.js',
-  './parent.js',
-  './app.js',
-  './features.js',
-  './install.js',
+  './main.css?v=9',
+  './data.js?v=9',
+  './data_flash.js?v=9',
+  './audio.js?v=9',
+  './state.js?v=9',
+  './modules.js?v=9',
+  './parent.js?v=9',
+  './app.js?v=9',
+  './features.js?v=9',
+  './install.js?v=9',
   './manifest.json',
   './icon-192.svg',
   './icon-512.svg',
