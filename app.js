@@ -55,6 +55,19 @@ function renderHomeModules() {
       badge.style.background = lvl === 3 ? 'var(--purple)' : lvl === 2 ? '#e67e22' : 'var(--grass)';
     }
   });
+
+  // Badge agrégé pour les tables de multiplication (table_2 à table_10) :
+  // affiche le niveau le plus bas parmi toutes les tables, pour encourager
+  // à progresser sur celles qui sont encore faibles plutôt que de masquer le retard.
+  const tableBadge = document.getElementById('badge-table');
+  if (tableBadge) {
+    let minLvl = 3;
+    for (let n = 2; n <= 10; n++) {
+      minLvl = Math.min(minLvl, getUnlockedLevel('table_' + n));
+    }
+    tableBadge.textContent = 'Niv. ' + minLvl;
+    tableBadge.style.background = minLvl === 3 ? 'var(--purple)' : minLvl === 2 ? '#e67e22' : 'var(--grass)';
+  }
   const revBtn = document.getElementById('revisionBtn');
   if (revBtn) revBtn.style.display = hasRevisionItems() ? 'flex' : 'none';
   const rewardRevBtn = document.getElementById('rewardRevBtn');

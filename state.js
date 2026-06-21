@@ -162,6 +162,7 @@ function tryUnlockNextLevel(moduleKey) {
 // Filtre les questions d'un module selon le niveau débloqué
 function getAvailableQuestions(moduleKey) {
   const mod = modules[moduleKey];
+  if (!mod || !mod.questions) return [];
   const maxLvl = getUnlockedLevel(moduleKey);
   return mod.questions.filter(q => (q.lvl || 1) <= maxLvl);
 }

@@ -246,6 +246,8 @@ function setMarioReward(charKey, title, stars, msg) {
 function showScreen(id) {
   document.querySelectorAll('.screen, .parent-screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+  const floatBack = document.getElementById('floating-back-btn');
+  if (floatBack) floatBack.classList.toggle('show', id !== 'homeScreen');
 }
 
 function goHome() {
@@ -334,7 +336,20 @@ function loadQuestion() {
   const total = state.sessionQueue.length;
   const isRev = state.revisionMode;
 
-  if (!isRev) document.getElementById('activityTitle').textContent = modules[state.currentModule].title;
+  if (!q || total === 0) {
+    // Aucune question disponible : on évite l'écran vide et on prévient au lieu de planter
+    document.getElementById('progressLabel').textContent = '';
+    document.getElementById('progressFill').style.width  = '0%';
+    document.getElementById('questionText').textContent  = 'Aucune question disponible pour le moment.';
+    document.getElementById('imageHint').textContent     = '😕';
+    document.getElementById('answersGrid').innerHTML     = '';
+    return;
+  }
+
+  if (!isRev) {
+    const modDef = modules[state.currentModule];
+    if (modDef) document.getElementById('activityTitle').textContent = modDef.title;
+  }
   document.getElementById('progressLabel').textContent = `Question ${state.currentQ + 1} / ${total}`;
   document.getElementById('progressFill').style.width  = ((state.currentQ + 1) / total * 100) + '%';
   document.getElementById('questionText').textContent  = q.text;
@@ -671,7 +686,7 @@ function dicteeValidate() {
   } else {
     state.xp += 3; playSound('wrong');
     setFeedback('dicteeFeedback', false, '💪 Presque !', 'Le mot s\'écrit : ' + w.word);
-    speak('Le mot s\'écrit ' + w.word.split('').join(', '), 0.8);
+    speak('Regarde bien comment il s\'écrit !', 0.85);
   }
   document.querySelectorAll('.letter-btn').forEach(b => b.disabled = true);
   updateStarDisplay(); updateXpBar(); saveProgress();
@@ -755,9 +770,9 @@ function startRecording() {
     document.getElementById('oralTranscript').classList.add('has-text');
   };
   rec.onend  = () => stopRecording();
-  rec.onerror = () => stopRecording();
+  rec.onerror = (e) => { stopRecording(); showMicError('oralTranscript', e.error); };
   state.recognition = rec;
-  rec.start();
+  startSpeechRecognition(rec, 'oralTranscript', () => stopRecording());
 }
 
 function stopRecording() {
@@ -953,9 +968,9 @@ function startConjRecording() {
     document.getElementById('conjTranscript').classList.add('has-text');
   };
   rec.onend = () => stopConjRecording();
-  rec.onerror = () => stopConjRecording();
+  rec.onerror = (e) => { stopConjRecording(); showMicError('conjTranscript', e.error); };
   state.recognition = rec;
-  rec.start();
+  startSpeechRecognition(rec, 'conjTranscript', () => stopConjRecording());
 }
 
 function stopConjRecording() {
@@ -1062,6 +1077,8 @@ function startTableQuiz(n) {
   state.revisionMode   = false;
   state.sessionQueue   = q;
   document.getElementById('activityTitle').textContent = `🔢 Table de ${n}`;
+  const modLvlEl = document.getElementById('qModuleLevelBadge');
+  if (modLvlEl) modLvlEl.style.display = 'none';
   showScreen('activityScreen');
   loadQuestion();
 }

@@ -417,18 +417,50 @@ body.offline .offline-banner { display: block; }
 .bottom-nav {
   position: fixed; bottom: 0; left: 0; right: 0; background: white;
   display: flex; justify-content: space-around; align-items: center;
-  padding: 10px 0 16px; box-shadow: 0 -4px 20px rgba(0,0,0,0.08); z-index: 200;
+  padding: 10px 4px 16px; box-shadow: 0 -4px 20px rgba(0,0,0,0.08); z-index: 200;
 }
 .nav-btn {
   display: flex; flex-direction: column; align-items: center; gap: 3px;
   background: none; border: none; cursor: pointer;
-  padding: 6px 10px; border-radius: 16px;
+  padding: 6px 4px; border-radius: 16px;
   transition: background 0.15s; font-family: var(--font-main);
+  flex: 1 1 0; min-width: 0; max-width: 80px;
 }
 .nav-btn.active { background: #f0eaff; }
 .nav-icon { font-size: 22px; }
-.nav-label { font-size: 10px; font-weight: 700; color: #aaa; }
+.nav-label {
+  font-size: 10px; font-weight: 700; color: #aaa;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+}
 .nav-btn.active .nav-label { color: var(--purple); }
+
+/* === BOUTON RETOUR FLOTTANT === */
+/* Positionné sous le header sticky (qui occupe le haut de chaque écran) */
+#floating-back-btn {
+  position: fixed;
+  top: 84px; left: 14px;
+  z-index: 300;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  border: none;
+  background: white;
+  color: var(--dark);
+  font-size: 19px;
+  display: none;
+  align-items: center; justify-content: center;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform .15s ease;
+}
+#floating-back-btn.show { display: flex; }
+#floating-back-btn:active { transform: scale(.92); }
+
+/* Écrans très étroits : on resserre encore pour que les 6 vignettes tiennent */
+@media (max-width: 380px) {
+  .nav-btn { padding: 6px 2px; }
+  .nav-icon { font-size: 19px; }
+  .nav-label { font-size: 8.5px; }
+}
 
 /* === CONFETTI === */
 @keyframes fall {

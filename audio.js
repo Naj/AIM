@@ -68,3 +68,39 @@ function speak(text, rate) {
 if (window.speechSynthesis) {
   window.speechSynthesis.onvoiceschanged = () => {};
 }
+
+// ===================== RECONNAISSANCE VOCALE (MICRO) =====================
+// Message clair selon le type d'erreur, au lieu de laisser le bouton micro
+// échouer en silence (icône qui revient en arrière sans aucune explication).
+function micErrorMessage(errorCode) {
+  if (errorCode === 'not-allowed' || errorCode === 'service-not-allowed') return '🔒 Le micro est bloqué. Autorise-le dans les réglages de l\'appareil, puis réessaie !';
+  if (errorCode === 'network')       return '📶 Le micro a besoin d\'internet pour fonctionner. Vérifie ta connexion !';
+  if (errorCode === 'no-speech')     return 'Je n\'ai rien entendu, réessaie !';
+  if (errorCode === 'audio-capture') return 'Aucun micro trouvé sur cet appareil.';
+  return 'Le micro n\'a pas pu être utilisé. Réessaie ou utilise "Voir la réponse" !';
+}
+
+function showMicError(transcriptElId, errorCode) {
+  const el = document.getElementById(transcriptElId);
+  if (!el) return;
+  el.textContent = micErrorMessage(errorCode);
+  el.classList.add('has-text');
+}
+
+// Demande explicitement l'accès au micro puis démarre la reconnaissance vocale.
+// Sur certains appareils/navigateurs, lancer rec.start() directement échoue en
+// silence si le micro est refusé/indisponible — on passe par getUserMedia d'abord
+// pour fiabiliser la demande de permission ET afficher un message clair si ça rate.
+function startSpeechRecognition(rec, transcriptElId, onFail) {
+  function tryStart() {
+    try { rec.start(); }
+    catch (e) { showMicError(transcriptElId, null); if (onFail) onFail(); }
+  }
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(() => tryStart())
+      .catch(() => { showMicError(transcriptElId, 'not-allowed'); if (onFail) onFail(); });
+  } else {
+    tryStart();
+  }
+}

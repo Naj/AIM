@@ -255,12 +255,17 @@ function startKaraokeRecord() {
     saveProgress(); updateStarDisplay(); updateXpBar();
     playSound('correct'); checkBadges();
   };
-  rec.onerror = () => {
+  rec.onerror = (e) => {
     document.getElementById('karaokeRecordBtn').classList.remove('recording');
     document.getElementById('karaokeRecordIcon').textContent = '🎙️';
     document.getElementById('karaokeNextBtn').classList.add('show');
+    showMicError('karaokeTranscript', e.error);
   };
-  rec.start();
+  startSpeechRecognition(rec, 'karaokeTranscript', () => {
+    document.getElementById('karaokeRecordBtn').classList.remove('recording');
+    document.getElementById('karaokeRecordIcon').textContent = '🎙️';
+    document.getElementById('karaokeNextBtn').classList.add('show');
+  });
   state.karaokeRecording = true;
 }
 
@@ -434,6 +439,11 @@ function startDefiDuJour() {
     return;
   }
   const questions = buildDailyChallenge();
+  if (!questions || questions.length === 0) {
+    setMarioReward('star', 'Pas encore de défi disponible', '⭐', 'Termine d\'abord une activité pour débloquer le défi du jour !');
+    showScreen('rewardScreen');
+    return;
+  }
   state.currentModule   = '__defi__';
   state.currentQ        = 0;
   state.score           = 0;
