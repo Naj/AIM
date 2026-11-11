@@ -256,10 +256,18 @@ function goHome() {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('navHome').classList.add('active');
   renderHomeModules(); // refresh locks/badges
+  if (typeof renderPlanCE2 === 'function') renderPlanCE2();
+  if (window.speechSynthesis) speechSynthesis.cancel();
 }
 
 function startModule(moduleId, revisionMode) {
   if (moduleId === 'memory')   { startMemoryGame();         return; }
+  // Ateliers CE2 (ce2.js)
+  if (moduleId === 'denombrement')   { startDenombrement();  return; }
+  if (moduleId === 'prob_ecoute')    { startProbEcoute();    return; }
+  if (moduleId === 'accord_gn')      { startAccord();        return; }
+  if (moduleId === 'familles')       { startFamilles();      return; }
+  if (moduleId === 'lecture_ecoute') { startEcouteTexte();   return; }
   if (moduleId === 'lecture')  { startLecture();            return; }
   if (moduleId === 'dictee')   { startDictee();             return; }
   if (moduleId === 'oral')     { startOral();               return; }

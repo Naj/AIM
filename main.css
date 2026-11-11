@@ -1154,3 +1154,107 @@ body.offline .offline-banner { display: block; }
   color: #2e9e54; font-size: 12px; line-height: 1.6; font-weight: 700;
   display: flex; gap: 8px; align-items: flex-start;
 }
+
+/* =====================================================================
+   CE2 — PLAN DE TRAVAIL & ATELIERS REPÈRES (v10)
+   ===================================================================== */
+
+/* --- Plan de travail sur l'accueil --- */
+.plan-ce2 {
+  background: white; border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 16px; margin: 0 0 20px;
+}
+.plan-head { margin-bottom: 12px; }
+.plan-title { font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--dark); }
+.plan-sub { font-size: 12px; font-weight: 700; color: #aaa; margin-top: 2px; }
+.plan-list { display: grid; gap: 8px; }
+.plan-row {
+  display: grid; grid-template-columns: 28px 1fr 56px; align-items: center; gap: 10px;
+  width: 100%; text-align: left; cursor: pointer;
+  background: var(--cream); border: 1.5px solid #f0e8d8; border-radius: 14px;
+  padding: 9px 11px; font-family: var(--font-main);
+  transition: transform .12s;
+}
+.plan-row:active { transform: scale(.98); }
+.plan-ic { font-size: 18px; text-align: center; }
+.plan-txt { min-width: 0; }
+.plan-nom { display: block; font-size: 13px; font-weight: 800; color: var(--dark);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.plan-dom { display: block; font-size: 10px; font-weight: 800; color: #aaa; letter-spacing: .3px; }
+.plan-bar { height: 8px; border-radius: 99px; background: #e8e2d6; overflow: hidden; }
+.plan-bar i { display: block; height: 100%; border-radius: 99px; background: var(--grass); }
+
+/* --- Dénombrement : collections de cubes --- */
+.dn-collection {
+  display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end;
+  background: var(--cream); border: 1.5px solid #f0e8d8; border-radius: 16px;
+  padding: 16px; margin: 14px 0;
+}
+.dn-grp { text-align: center; }
+.dn-lbl { font-size: 10px; font-weight: 900; color: #aaa; letter-spacing: .4px; margin-top: 5px; }
+.dn-hundred { display: grid; grid-template-columns: repeat(10, 1fr); gap: 1px; width: 62px; }
+.dn-ten { display: grid; grid-template-columns: 1fr; gap: 1px; width: 7px; }
+.dn-ones { display: flex; gap: 3px; }
+.dn-cube { aspect-ratio: 1; background: var(--sky); border-radius: 1px; }
+.dn-ones .dn-cube { width: 7px; }
+.dn-steps { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.dn-step {
+  flex: 1 1 86px; min-width: 0; text-align: center;
+  background: var(--cream); border: 1.5px solid #f0e8d8; border-radius: 12px; padding: 8px;
+}
+.dn-step b { display: block; font-family: var(--font-display); font-size: 19px; color: var(--dark); }
+.dn-step span { font-size: 10px; font-weight: 800; color: #aaa; letter-spacing: .3px; }
+.dn-controls { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; justify-content: center; }
+.dn-input {
+  font-family: var(--font-display); font-size: 24px; font-weight: 700;
+  width: 110px; text-align: center; color: var(--dark);
+  border: 3px solid #f0e8d8; border-radius: 14px; padding: 8px; background: white;
+}
+.dn-input:focus { outline: none; border-color: var(--sky); }
+
+/* --- Problèmes entendus --- */
+.prob-ecoutes {
+  text-align: center; font-size: 12px; font-weight: 800; color: #aaa;
+  margin: 10px 0 14px; letter-spacing: .2px;
+}
+
+/* --- Accord nom / adjectif --- */
+.gn-box {
+  display: flex; gap: 10px; align-items: flex-start; flex-wrap: wrap; justify-content: center;
+  background: var(--cream); border: 1.5px solid #f0e8d8; border-radius: 16px;
+  padding: 16px; margin: 14px 0;
+}
+.gn-part { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.gn-chip {
+  font-family: var(--font-display); font-size: 21px; font-weight: 700; color: var(--dark);
+  background: var(--sun); border-radius: 10px; padding: 3px 11px;
+}
+.gn-chip.nom { background: var(--pink); }
+.gn-slot {
+  font-family: var(--font-display); font-size: 21px; font-weight: 700; color: #bbb;
+  border-bottom: 3px dashed var(--purple); min-width: 92px; text-align: center;
+  padding: 3px 8px; display: inline-block;
+}
+.gn-slot.filled { color: var(--dark); }
+.gn-tag { font-size: 9.5px; font-weight: 900; color: #aaa; letter-spacing: .4px; text-align: center; }
+
+/* --- Familles de mots --- */
+.fam-radical {
+  text-align: center; font-size: 12.5px; font-weight: 800; color: var(--purple);
+  margin-top: 12px; min-height: 18px; letter-spacing: .2px;
+}
+
+/* --- Liens bonus dans l'espace parent --- */
+.bonus-list { display: grid; gap: 8px; margin-top: 10px; }
+.bonus-link {
+  display: flex; align-items: center; gap: 10px; text-decoration: none;
+  background: var(--cream); border: 1.5px solid #f0e8d8; border-radius: 12px;
+  padding: 10px 12px; color: var(--dark); font-size: 13px; font-weight: 700;
+}
+.bonus-link .bl-ic { font-size: 16px; }
+.bonus-link .bl-src { display: block; font-size: 10px; font-weight: 800; color: #aaa; letter-spacing: .3px; }
+
+@media (max-width: 380px) {
+  .dn-hundred { width: 52px; }
+  .gn-chip, .gn-slot { font-size: 18px; }
+}

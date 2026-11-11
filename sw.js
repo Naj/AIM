@@ -1,21 +1,24 @@
-// AIM — Service Worker (v9)
-// v9 : URLs versionnées (?v=9) pour casser le cache navigateur 1 an déjà posé sur les
-// appareils visités avant le fix du _headers (v8 seul ne suffisait pas, l'ancienne
-// URL sans version restait piégée dans le cache HTTP existant)
-const CACHE_NAME = 'aim-v9';
+// AIM — Service Worker (v10)
+// v10 : mise à jour CE2 — banque data_ce2.js (+104 questions sur TOUS les modules)
+// et ateliers ce2.js : dénombrement, problèmes entendus, accord du groupe nominal,
+// familles de mots, textes entendus, plan de travail sur l'accueil.
+// URLs repassées en ?v=10 pour forcer le rafraîchissement du cache navigateur.
+const CACHE_NAME = 'aim-v10';
 const ASSETS = [
   './',
   './index.html',
-  './main.css?v=9',
-  './data.js?v=9',
-  './data_flash.js?v=9',
-  './audio.js?v=9',
-  './state.js?v=9',
-  './modules.js?v=9',
-  './parent.js?v=9',
-  './app.js?v=9',
-  './features.js?v=9',
-  './install.js?v=9',
+  './main.css?v=10',
+  './data.js?v=10',
+  './data_ce2.js?v=10',
+  './data_flash.js?v=10',
+  './audio.js?v=10',
+  './state.js?v=10',
+  './modules.js?v=10',
+  './parent.js?v=10',
+  './ce2.js?v=10',
+  './app.js?v=10',
+  './features.js?v=10',
+  './install.js?v=10',
   './manifest.json',
   './icon-192.svg',
   './icon-512.svg',

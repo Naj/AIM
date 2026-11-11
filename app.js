@@ -4,6 +4,7 @@ function init() {
   updateXpBar();
   updateStreakPill();
   renderHomeModules();
+  if (typeof renderPlanCE2 === 'function') renderPlanCE2();
   registerServiceWorker();
   handleOffline();
 }
@@ -12,7 +13,9 @@ function renderHomeModules() {
   // Update level badges for ALL modules (QCM + non-QCM)
   const allModuleKeys = [
     ...Object.keys(modules),
-    'flashcards','karaoke','puzzle','lecture','dictee','oral','conj_oral','memory'
+    'flashcards','karaoke','puzzle','lecture','dictee','oral','conj_oral','memory',
+    // Ateliers CE2 (voir ce2.js)
+    'denombrement','prob_ecoute','accord_gn','familles','lecture_ecoute'
   ];
   allModuleKeys.forEach(key => {
     const badge = document.getElementById('badge-' + key);

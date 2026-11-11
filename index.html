@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-title" content="AIM">
 <link rel="manifest" href="./manifest.json">
 <title>AIM – Aide Interactive Maïssa</title>
-<link rel="stylesheet" href="./main.css?v=9">
+<link rel="stylesheet" href="./main.css?v=10">
 </head>
 <body>
 
@@ -115,6 +115,15 @@
     <div class="rev-arrow">→</div>
   </div>
 
+  <!-- PLAN DE TRAVAIL — miroir de l'évaluation Repères CE2 -->
+  <div class="plan-ce2">
+    <div class="plan-head">
+      <div class="plan-title">🎯 Mon plan de travail</div>
+      <div class="plan-sub">Mes 6 priorités de l'évaluation de septembre</div>
+    </div>
+    <div class="plan-list" id="planCe2List"></div>
+  </div>
+
   <div class="section-title"><span>📚</span>Choisir une activité</div>
 
   <!-- SECTION SPÉCIALE REPÈRES -->
@@ -123,6 +132,36 @@
     <div class="reperes-sub">D'après ton évaluation repères — tes points à améliorer !</div>
   </div>
   <div class="modules-grid reperes-grid">
+    <div class="module-card reperes" onclick="startProbEcoute()">
+      <div class="module-icon">🧩</div>
+      <div class="module-name">Problèmes entendus</div>
+      <div class="module-sub">J'écoute et je résous</div>
+      <div class="lvl-badge" id="badge-prob_ecoute">Niv. 1</div>
+    </div>
+    <div class="module-card reperes" onclick="startDenombrement()">
+      <div class="module-icon">🧱</div>
+      <div class="module-name">Je dénombre</div>
+      <div class="module-sub">Collections de cubes</div>
+      <div class="lvl-badge" id="badge-denombrement">Niv. 1</div>
+    </div>
+    <div class="module-card reperes" onclick="startAccord()">
+      <div class="module-icon">🔗</div>
+      <div class="module-name">J'accorde</div>
+      <div class="module-sub">Nom &amp; adjectif</div>
+      <div class="lvl-badge" id="badge-accord_gn">Niv. 1</div>
+    </div>
+    <div class="module-card reperes" onclick="startFamilles()">
+      <div class="module-icon">🌳</div>
+      <div class="module-name">Familles de mots</div>
+      <div class="module-sub">Trouve l'intrus</div>
+      <div class="lvl-badge" id="badge-familles">Niv. 1</div>
+    </div>
+    <div class="module-card reperes" onclick="startEcouteTexte()">
+      <div class="module-icon">👂</div>
+      <div class="module-name">J'écoute &amp; je comprends</div>
+      <div class="module-sub">Textes entendus</div>
+      <div class="lvl-badge" id="badge-lecture_ecoute">Niv. 1</div>
+    </div>
     <div class="module-card reperes" data-key="comp_texte" onclick="startModule('comp_texte')">
       <div class="module-icon">📝</div>
       <div class="module-name">Je comprends ce que je lis</div>
@@ -363,6 +402,155 @@
   </div>
 </div>
 
+<!-- DÉNOMBRER DES COLLECTIONS -->
+<div class="screen" id="denombrementScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="activity-header">
+    <div class="activity-title">🧱 Je dénombre</div>
+    <div class="level-badge lvl-1" id="denomLevelBadge" style="display:none;margin-top:6px"></div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="denomProgressLabel">Collection 1 / 10</div>
+      <div class="progress-bar"><div class="progress-fill" id="denomProgress" style="width:10%"></div></div>
+    </div>
+  </div>
+  <div class="question-card">
+    <div class="question-hint" style="display:flex">💡 <span>Compte les plaques de 100, les barres de 10, puis les cubes seuls.</span></div>
+    <div class="question-text">Combien y a-t-il de cubes en tout&nbsp;?</div>
+    <div class="dn-collection" id="denomCollection"></div>
+    <div class="dn-steps">
+      <div class="dn-step"><b id="denomH">?</b><span>CENTAINES</span></div>
+      <div class="dn-step"><b id="denomT">?</b><span>DIZAINES</span></div>
+      <div class="dn-step"><b id="denomU">?</b><span>UNITÉS</span></div>
+    </div>
+    <div class="dn-controls">
+      <input class="dn-input" id="denomInput" inputmode="numeric" placeholder="?" aria-label="Nombre de cubes">
+      <button class="dictee-ctrl-btn" onclick="denomAide()">🔎 Aide</button>
+      <button class="dictee-ctrl-btn validate" onclick="denomValider()">✅ Valider</button>
+    </div>
+    <div class="feedback-card" id="denomFeedback">
+      <div class="feedback-emoji"></div>
+      <div class="feedback-text"></div>
+      <div class="feedback-explain"></div>
+    </div>
+    <button class="next-btn" id="denomNextBtn" onclick="denomNext()">Continuer ➡️</button>
+  </div>
+</div>
+
+<!-- PROBLÈMES ENTENDUS -->
+<div class="screen" id="probEcouteScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="activity-header">
+    <div class="activity-title">🧩 Problèmes entendus</div>
+    <div class="level-badge lvl-1" id="probLevelBadge" style="display:none;margin-top:6px"></div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="probProgressLabel">Problème 1 / 10</div>
+      <div class="progress-bar"><div class="progress-fill" id="probProgress" style="width:10%"></div></div>
+    </div>
+  </div>
+  <div class="question-card">
+    <div class="question-hint" style="display:flex">💡 <span>L'énoncé est lu à voix haute, comme à l'évaluation. Écoute bien&nbsp;!</span></div>
+    <button class="dictee-listen-btn" onclick="probEcouter()">🔊 Écouter l'énoncé</button>
+    <div class="prob-ecoutes" id="probEcoutesLabel">Appuie pour écouter l'énoncé</div>
+    <div class="answers-grid" id="probOptions"></div>
+    <div class="feedback-card" id="probFeedback">
+      <div class="feedback-emoji"></div>
+      <div class="feedback-text"></div>
+      <div class="feedback-explain"></div>
+    </div>
+    <button class="next-btn" id="probNextBtn" onclick="probNext()">Continuer ➡️</button>
+  </div>
+</div>
+
+<!-- ACCORD NOM / ADJECTIF -->
+<div class="screen" id="accordScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="activity-header">
+    <div class="activity-title">🔗 J'accorde</div>
+    <div class="level-badge lvl-1" id="accordLevelBadge" style="display:none;margin-top:6px"></div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="accordProgressLabel">Groupe 1 / 10</div>
+      <div class="progress-bar"><div class="progress-fill" id="accordProgress" style="width:10%"></div></div>
+    </div>
+  </div>
+  <div class="question-card">
+    <div class="question-hint" style="display:flex">💡 <span>Regarde d'abord le déterminant&nbsp;: il donne le genre et le nombre.</span></div>
+    <div class="question-text">Choisis l'adjectif qui s'accorde</div>
+    <div class="gn-box">
+      <span class="gn-part"><span class="gn-chip det" id="accordDet">les</span><span class="gn-tag">DÉTERMINANT</span></span>
+      <span class="gn-part"><span class="gn-chip nom" id="accordNom">feuilles</span><span class="gn-tag" id="accordGenre">FÉMININ PLURIEL</span></span>
+      <span class="gn-part"><span class="gn-slot" id="accordSlot">……</span><span class="gn-tag">ADJECTIF</span></span>
+    </div>
+    <div class="answers-grid" id="accordOptions"></div>
+    <div class="feedback-card" id="accordFeedback">
+      <div class="feedback-emoji"></div>
+      <div class="feedback-text"></div>
+      <div class="feedback-explain"></div>
+    </div>
+    <button class="next-btn" id="accordNextBtn" onclick="accordNext()">Continuer ➡️</button>
+  </div>
+</div>
+
+<!-- MOTS DE LA MÊME FAMILLE -->
+<div class="screen" id="famillesScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="activity-header">
+    <div class="activity-title">🌳 Familles de mots</div>
+    <div class="level-badge lvl-1" id="famLevelBadge" style="display:none;margin-top:6px"></div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="famProgressLabel">Liste 1 / 10</div>
+      <div class="progress-bar"><div class="progress-fill" id="famProgress" style="width:10%"></div></div>
+    </div>
+  </div>
+  <div class="question-card">
+    <div class="question-hint" style="display:flex">💡 <span>Trois mots sont de la même famille. Trouve celui qui n'en est pas&nbsp;!</span></div>
+    <div class="question-text">Trouve l'intrus</div>
+    <button class="dictee-listen-btn" onclick="famEcouter()">🔊 Écouter les mots</button>
+    <div class="answers-grid" id="famOptions"></div>
+    <div class="fam-radical" id="famRadical"></div>
+    <div class="feedback-card" id="famFeedback">
+      <div class="feedback-emoji"></div>
+      <div class="feedback-text"></div>
+      <div class="feedback-explain"></div>
+    </div>
+    <button class="next-btn" id="famNextBtn" onclick="famNext()">Continuer ➡️</button>
+  </div>
+</div>
+
+<!-- COMPRENDRE UN TEXTE ENTENDU -->
+<div class="screen" id="ecouteScreen">
+  <button class="back-btn" onclick="goHome()">← Retour</button>
+  <div class="activity-header">
+    <div class="activity-title">👂 J'écoute &amp; je comprends</div>
+    <div class="progress-wrap">
+      <div class="progress-label" id="ecouteProgressLabel">Texte 1 / 3</div>
+      <div class="progress-bar"><div class="progress-fill" id="ecouteProgress" style="width:33%"></div></div>
+    </div>
+  </div>
+  <div id="ecouteZone">
+    <div class="question-card">
+      <div class="question-hint" style="display:flex">💡 <span>Le texte n'est pas écrit&nbsp;: il faut bien l'écouter, comme à l'évaluation.</span></div>
+      <div class="story-image" id="ecouteImage">👂</div>
+      <div class="story-title" id="ecouteTitre"></div>
+      <button class="dictee-listen-btn" onclick="ecouterTexte()">🔊 Écouter le texte</button>
+      <div class="prob-ecoutes" id="ecouteCompteur">Tu peux écouter 2 fois</div>
+      <button class="next-btn" id="ecouteGoQ" onclick="ecouteQuestions()">J'ai écouté ! Les questions ➡️</button>
+    </div>
+  </div>
+  <div id="ecouteQZone" style="display:none">
+    <div class="question-card">
+      <div class="question-hint" style="display:flex">💡 <span id="ecouteQLabel">Question 1 / 3</span></div>
+      <div class="question-text" id="ecouteQText"></div>
+      <div class="answers-grid" id="ecouteAnswers"></div>
+      <div class="feedback-card" id="ecouteFeedback">
+        <div class="feedback-emoji"></div>
+        <div class="feedback-text"></div>
+        <div class="feedback-explain"></div>
+      </div>
+      <button class="next-btn" id="ecouteNextBtn" onclick="ecouteNextQ()">Continuer ➡️</button>
+    </div>
+  </div>
+</div>
+
 <!-- DICTÉE SCREEN -->
 <div class="screen" id="dicteeScreen">
   <button class="back-btn" onclick="goHome()">← Retour</button>
@@ -590,6 +778,30 @@
       <div class="enc-item">✔ Utiliser le Mode Révision pour les questions souvent ratées</div>
       <div class="enc-item">✔ Faire la dictée après les séances d'orthophonie</div>
     </div>
+    <div class="encouragement-card">
+      <div class="enc-title">🔗 Bonus — pour aller plus loin</div>
+      <div class="enc-item" style="margin-bottom:6px">Ressources externes, à faire avec un adulte. Elles complètent le plan de travail sans le remplacer.</div>
+      <div class="bonus-list">
+        <a class="bonus-link" href="https://lesfondamentaux.reseau-canope.fr/video/francais/grammaire/la-phrase/les-marques-de-ponctuation" target="_blank" rel="noopener">
+          <span class="bl-ic">🎬</span><span>Les marques de ponctuation<span class="bl-src">RÉSEAU CANOPÉ · VIDÉO</span></span></a>
+        <a class="bonus-link" href="https://lesfondamentaux.reseau-canope.fr/video/francais/grammaire/types-et-formes-de-phrases/le-type-interrogatif" target="_blank" rel="noopener">
+          <span class="bl-ic">🎬</span><span>Le type interrogatif<span class="bl-src">RÉSEAU CANOPÉ · VIDÉO</span></span></a>
+        <a class="bonus-link" href="https://lesfondamentaux.reseau-canope.fr/video/francais/grammaire/les-fonctions-du-nom-propre-du-groupe-nominal-ou-du-pronom/identifier-les-constituants-de-la-phrase" target="_blank" rel="noopener">
+          <span class="bl-ic">🎬</span><span>Identifier les constituants de la phrase<span class="bl-src">RÉSEAU CANOPÉ · VIDÉO</span></span></a>
+        <a class="bonus-link" href="https://lesfondamentaux.reseau-canope.fr/video/mathematiques/operations/addition-de-deux-nombres-inferieurs-a-100/additionner-deux-nombres-inferieurs-a-100-avec-retenue" target="_blank" rel="noopener">
+          <span class="bl-ic">🎬</span><span>Additionner avec retenue<span class="bl-src">RÉSEAU CANOPÉ · VIDÉO</span></span></a>
+        <a class="bonus-link" href="https://www.logicieleducatif.fr/games/nombres-en-lettres6/index.html" target="_blank" rel="noopener">
+          <span class="bl-ic">🎮</span><span>Les nombres en lettres<span class="bl-src">LOGICIEL ÉDUCATIF · JEU</span></span></a>
+        <a class="bonus-link" href="https://www.ortholud.com/grammaire/verbe/index.php" target="_blank" rel="noopener">
+          <span class="bl-ic">🎮</span><span>Trouver les verbes<span class="bl-src">ORTHOLUD · EXERCICE</span></span></a>
+        <a class="bonus-link" href="https://learningapps.org/view7579449" target="_blank" rel="noopener">
+          <span class="bl-ic">🎮</span><span>La phrase<span class="bl-src">LEARNINGAPPS · NIVEAU CM1</span></span></a>
+        <a class="bonus-link" href="https://learningapps.org/view7579485" target="_blank" rel="noopener">
+          <span class="bl-ic">🎮</span><span>Les formes de phrase<span class="bl-src">LEARNINGAPPS · NIVEAU CM1</span></span></a>
+        <a class="bonus-link" href="https://learningapps.org/view7579480" target="_blank" rel="noopener">
+          <span class="bl-ic">🎮</span><span>La forme négative<span class="bl-src">LEARNINGAPPS · NIVEAU CM1</span></span></a>
+      </div>
+    </div>
     <button class="back-btn" style="margin-top:20px;display:flex" onclick="resetParent()">🔒 Verrouiller</button>
     <button class="back-btn" style="margin-top:10px;display:flex;background:#ffe0da;color:#c0392b" onclick="confirmReset()">🗑️ Remettre à zéro</button>
   </div>
@@ -763,14 +975,16 @@
   </div>
 </div>
 
-<script src="./data.js?v=9"></script>
-<script src="./data_flash.js?v=9"></script>
-<script src="./audio.js?v=9"></script>
-<script src="./state.js?v=9"></script>
-<script src="./modules.js?v=9"></script>
-<script src="./parent.js?v=9"></script>
-<script src="./app.js?v=9"></script>
-<script src="./features.js?v=9"></script>
-<script src="./install.js?v=9"></script>
+<script src="./data.js?v=10"></script>
+<script src="./data_ce2.js?v=10"></script>
+<script src="./data_flash.js?v=10"></script>
+<script src="./audio.js?v=10"></script>
+<script src="./state.js?v=10"></script>
+<script src="./modules.js?v=10"></script>
+<script src="./parent.js?v=10"></script>
+<script src="./ce2.js?v=10"></script>
+<script src="./app.js?v=10"></script>
+<script src="./features.js?v=10"></script>
+<script src="./install.js?v=10"></script>
 </body>
 </html>
